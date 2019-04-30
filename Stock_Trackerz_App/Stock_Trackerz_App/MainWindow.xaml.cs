@@ -35,7 +35,7 @@ namespace Stock_Trackerz_App
 
         }
 
-        private void View_All_Button_Click(object sender, RoutedEventArgs e)
+        private void All_Stock_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -45,12 +45,12 @@ namespace Stock_Trackerz_App
 
         }
 
-        private void Stock_Info_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Stock_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Search_Box_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
