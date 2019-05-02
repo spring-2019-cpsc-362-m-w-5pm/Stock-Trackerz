@@ -30,8 +30,10 @@ int main()
 	// The LastErrorText can be examined in the success case to see if it was unlocked in
 	// trial more, or with a purchased unlock code.
 	std::cout << glob.lastErrorText() << "\r\n";
+
+
 	// Download a .zip
-	const char *localFilePath = "\temp\test.csv";
+	const char *localFilePath = "C:\\users\\Alpha\\Desktop\\test.csv";
 	bool success = http.Download("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=RX87R5FA22ZGOH0Z&datatype=csv", localFilePath);
 	if (success != true) {
 		std::cout << http.lastErrorText() << "\r\n";
