@@ -3,9 +3,13 @@
 
 #include "pch.h"
 #include <iostream>
+#include <istream>
 #include <CkHttp.h>
 #include <CkSocket.h>
 #include <CkGlobal.h>
+#include "Stock.h"
+#include "StockList.h"
+#include "StockPortfolio.h"
 
 int main()
 {
@@ -33,14 +37,69 @@ int main()
 
 
 	// Download a .zip
-	const char *localFilePath = "C:\\users\\Alpha\\Desktop\\test.csv";
-	bool success = http.Download("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=RX87R5FA22ZGOH0Z&datatype=csv", localFilePath);
+	const char *localFilePath = "C:\\Users\\Alpha\\Documents\\GitHub\\Stock-Trackerz\\ConsoleApplication1\\ConsoleApplication1\\test1.csv";
+	bool success = http.Download("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=RSI&apikey=RX87R5FA22ZGOH0Z&datatype=csv", localFilePath);
 	if (success != true) {
 		std::cout << http.lastErrorText() << "\r\n";
 		return 0;
 	}
 	std::cout << localFilePath << "\n";
 	std::cout << "OK!" << "\r\n";
+
+	Stock testStock;
+	Stock tempStock;
+	StockList testList;
+	StockPortfolio testPort;
+
+	std::cout << "Test 1 - Stock Object" << std::endl;
+	testStock.UpdateStockInfo("MSFT");
+	std::cout << "Ticker: ";
+	testStock.PrintName();
+	std::cout << std::endl << "High Price: ";
+	testStock.PrintHighPrice();
+	std::cout << std::endl << "Test 2 - StockList Search " << std::endl;
+	testList.AddToList("BUTTS");
+	tempStock = testList.SearchForName("BUTTS");
+	tempStock.PrintName();
+	std::cout << std::endl << "Test 3 - StockList Output Position" << std::endl;
+	testList.AddToList("TACOS");
+	tempStock = testList.OutputStock(1);
+	tempStock.PrintName();
+	std::cout << std::endl << "Test 4 - Portfolio" << std::endl;
+	testPort.AddToList("MSFT", 100, 10.3);
+	tempStock = testPort.OutputStock(0);
+	std::cout << "Purchase quantity: ";
+	tempStock.PrintPurchaseQuantity();
+	std::cout << std::endl << "Purchase Price: ";
+	tempStock.PrintPurchasePrice();
+	std::cout << std::endl << "Total cost: ";
+	std::cout << tempStock.GetPurchasePrice() * tempStock.GetPurchaseQuantity();
+	std::cout << std::endl << "Test 5 - Repeats" << std::endl;
+	for (int i = 0; i < testPort.GetSize(); i++)
+	{
+		testStock = testPort.OutputStock(i);
+		testStock.PrintName();
+		testStock.PrintPurchaseQuantity();
+		std::cout << std::endl;
+	}
+
+	testPort.AddToList("TACOS", 10, 100);
+	testPort.AddToList("TACOS", 20, 100);
+	testPort.AddToList("TACOS", 30, 100);
+	testPort.AddToList("TACOS", 40, 100);
+
+	for (int i = 0; i < testPort.GetSize(); i++)
+	{
+		testStock = testPort.OutputStock(i);
+		testStock.PrintName();
+		std::cout << std::endl;
+		testStock.PrintPurchaseQuantity();
+		std::cout << std::endl;
+		testStock.PrintPurchasePrice();
+		std::cout << std::endl;
+	}
+
+	system("PAUSE");
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
