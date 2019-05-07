@@ -9,6 +9,8 @@ Stock::Stock()
 	closePrice = 0;
 	volume = 0;
 	lastUpdated = "Never";
+	purchasePrice = 0;
+	purchaseQuantity = 0;
 }
 void Stock::UpdateStockInfo(std::string tickerName)
 {
@@ -21,27 +23,30 @@ void Stock::UpdateStockInfo(std::string tickerName)
 
 	if (!inFile)
 	{
-		std::cout << "Error opening file" << std::endl;
+		std::cout << "STOCK DATA UNAVAILABLE" << std::endl;
 	}
-	std::getline(inFile, temp);
+	else
+	{
+		std::getline(inFile, temp);
 
-	std::getline(inFile, lastUpdated, ',');
-	std::getline(inFile, temp, ',');
-	openPrice = stof(temp);
-	std::getline(inFile, temp, ',');
-	highPrice = stof(temp);
-	std::getline(inFile, temp, ',');
-	lowPrice = stof(temp);
-	std::getline(inFile, temp, ',');
-	closePrice = stof(temp);
-	std::getline(inFile, temp, ',');
-	volume = stof(temp);
+		std::getline(inFile, lastUpdated, ',');
+		std::getline(inFile, temp, ',');
+		openPrice = stof(temp);
+		std::getline(inFile, temp, ',');
+		highPrice = stof(temp);
+		std::getline(inFile, temp, ',');
+		lowPrice = stof(temp);
+		std::getline(inFile, temp, ',');
+		closePrice = stof(temp);
+		std::getline(inFile, temp, ',');
+		volume = stof(temp);
 
-	inFile.close();
+		inFile.close();
+	}
 }
 void Stock::SetPurchaseQuantity(int quantity)
 {
-	purchaseQuantity = quantity;
+	purchaseQuantity = quantity;	
 }
 void Stock::SetPurchasePrice(float price)
 {
