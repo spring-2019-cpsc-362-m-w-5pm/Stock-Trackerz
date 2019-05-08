@@ -10,48 +10,126 @@
 #include "Stock.h"
 #include "StockList.h"
 #include "StockPortfolio.h"
+#include <string>
 
+using namespace std; 
 int main()
 {
-    std::cout << "Hello World!\n"; 
-
-	CkHttp http;
-	CkGlobal glob;
-	bool success1 = glob.UnlockBundle("Anything for 30-day trial");
-	if (success1 != true) {
-		std::cout << glob.lastErrorText() << "\r\n";
-		return 0;
-	}
-
-	int status = glob.get_UnlockStatus();
-	if (status == 2) {
-		std::cout << "Unlocked using purchased unlock code." << "\r\n";
-	}
-	else {
-		std::cout << "Unlocked in trial mode." << "\r\n";
-	}
-
-	// The LastErrorText can be examined in the success case to see if it was unlocked in
-	// trial more, or with a purchased unlock code.
-	std::cout << glob.lastErrorText() << "\r\n";
-
-
-	// Download a .zip
-	const char *localFilePath = "C:\\Users\\Alpha\\Documents\\GitHub\\Stock-Trackerz\\ConsoleApplication1\\ConsoleApplication1\\test1.csv";
-	bool success = http.Download("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=RSI&apikey=RX87R5FA22ZGOH0Z&datatype=csv", localFilePath);
-	if (success != true) {
-		std::cout << http.lastErrorText() << "\r\n";
-		return 0;
-	}
-	std::cout << localFilePath << "\n";
-	std::cout << "OK!" << "\r\n";
-
 	Stock testStock;
 	Stock tempStock;
 	StockList testList;
 	StockPortfolio testPort;
+	string ticker;
+	char cont;
+	cout << "Welcome to Stock Trackerz !!!" << endl << endl;
 
-	std::cout << "Test 1 - Stock Object" << std::endl;
+	//do while loop that will repeatedly as the user if they want to search for a new stock 
+	do
+	{
+		//reads in the ticker to be pulled from API
+		cout << "Please input the Symbol for the stock you would like see: ";
+		cin >> ticker;
+
+		CkHttp http;
+		CkGlobal glob;
+		bool success1 = glob.UnlockBundle("Anything for 30-day trial");
+		if (success1 != true) {
+			std::cout << glob.lastErrorText() << "\r\n";
+			return 0;
+		}
+
+		int status = glob.get_UnlockStatus();
+		if (status == 2) {
+			std::cout << "Unlocked using purchased unlock code." << "\r\n";
+		}
+		else {
+			std::cout << "Unlocked in trial mode." << "\r\n";
+		}
+
+		// The LastErrorText can be examined in the success case to see if it was unlocked in
+		// trial more, or with a purchased unlock code.
+		std::cout << glob.lastErrorText() << "\r\n";
+
+		string url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + ticker + "&apikey=RX87R5FA22ZGOH0Z&datatype=csv";
+		const char* http1 = url.c_str();;
+
+		// Download a .zip
+		string path = "C:\\Users\\areg.tevanyan\\Desktop\\Stock-Trackerz-master\\ConsoleApplication1\\ConsoleApplication1\\" + ticker + ".csv";
+		const char* path_char = path.c_str();
+
+		bool success = http.Download(http1, path_char);
+		if (success != true)
+		{
+			std::cout << http.lastErrorText() << "\r\n";
+			return 0;
+		}
+		std::cout << path_char << "\n";
+		std::cout << "OK!" << "\r\n";
+
+
+		//creates and adds stock to list 
+		testStock.UpdateStockInfo(ticker);
+		testList.AddToList(ticker);
+		cout << endl << endl << endl <<endl <<endl;
+		
+		//display basic info 
+		cout << "Ticker: ";
+		testStock.PrintName();
+		std::cout << std::endl << "The high for the day is: ";
+		testStock.PrintHighPrice();
+		cout << endl << "The low for the day is: ";
+		testStock.PrintLowPrice();
+		cout << endl << "The current price is: ";
+		testStock.PrintClosePrice();
+		cout << endl << "The current Volume is:	";
+		testStock.PrintVolume();
+		cout << endl;
+
+		//add stock to portfolio
+		cout << "Would you like to add this stock to your portfolio ?? Y/N" << endl;
+		char response;
+		cin >> response;
+		if (response == 'Y' || 'y')
+		{
+			int quantity;
+			float purchase_Price;
+
+			cout << "How many of these stock do you own?  ";
+			cin >> quantity;
+			cout << endl << "What was your purchase price?  ";
+			cin >> purchase_Price;
+			cout << endl;
+			testPort.AddToList(ticker, quantity, purchase_Price);
+
+			//shows the gain/loss for the current stock 
+			cout << "Your gain/loss for this stock is: ";
+			testStock.PrintStockReturn();
+			cout << endl;
+
+			cout << "Your return percentage for this stock is: ";
+			testStock.PrintStockPercentage();
+			std::cout << std::endl;
+
+			//loops through and displays the ticker and price of each stock in the users portfolio
+			//also this will calculate the running gain/loss on the entire portfolio
+			cout << "Here is a list of the stocks in your Portfolio: " << endl;
+			for (int i = 0; i < testPort.GetSize(); i++)
+			{
+				testStock = testPort.OutputStock(i);
+				testStock.PrintName();
+				cout << " -- shares: ";
+				testStock.PrintPurchaseQuantity();
+				cout << " -- Current Price: ";
+				testStock.PrintClosePrice();
+				cout << endl;
+			}
+		}
+
+		cout << "Would you like to search a new stock? Y/N  ";
+		cin >> cont;
+	}while(cont == 'Y'|| cont == 'y');
+
+	/*std::cout << "Test 1 - Stock Object" << std::endl;
 	testStock.UpdateStockInfo("MSFT");
 	std::cout << "Ticker: ";
 	testStock.PrintName();
@@ -97,9 +175,10 @@ int main()
 		std::cout << std::endl;
 		testStock.PrintPurchasePrice();
 		std::cout << std::endl;
-	}
+	}*/
 
 	system("PAUSE");
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
