@@ -28,6 +28,9 @@ public:
 	void PrintLastUpdated();
 	void PrintPurchaseQuantity();
 	void PrintPurchasePrice();
+	void PrintStockReturn();
+	void PrintStockEquity();
+	void PrintStockPercentage();
 
 private:
 	std::string name;
@@ -35,8 +38,11 @@ private:
 	float highPrice;
 	float lowPrice;
 	float closePrice;
+	float stock_Equity;
+	float stock_Return;
 	double volume;
 	std::string lastUpdated;
 	int purchaseQuantity;
 	float purchasePrice;
+	float stock_Percent;
 };
