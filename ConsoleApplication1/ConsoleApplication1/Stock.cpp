@@ -15,13 +15,16 @@ Stock::Stock()
 	lastUpdated = "Never";
 	purchasePrice = 0;
 	purchaseQuantity = 0;
+	stock_Equity = 0;
+	stock_Return = 0;
+	
 }
 void Stock::UpdateStockInfo(std::string tickerName)
 {
 	name = tickerName;
 	std::string fileName;
 	std::string temp;
-	fileName = "daily_" + tickerName + ".csv";
+	fileName = tickerName + ".csv";
 	std::ifstream inFile;
 	inFile.open(fileName);
 
@@ -47,6 +50,21 @@ void Stock::UpdateStockInfo(std::string tickerName)
 
 		inFile.close();
 	}
+	stock_Equity = (closePrice * purchaseQuantity);
+	stock_Return = (purchaseQuantity * closePrice) - (purchaseQuantity * purchasePrice);
+	stock_Percent = ((closePrice - purchasePrice) / purchasePrice) * 100;
+}
+void Stock::PrintStockEquity()
+{
+	cout << stock_Equity;
+}
+void Stock::PrintStockReturn()
+{
+	cout << stock_Return;
+}
+void Stock::PrintStockPercentage()
+{
+	cout << stock_Percent;
 }
 void Stock::SetPurchaseQuantity(int quantity)
 {
