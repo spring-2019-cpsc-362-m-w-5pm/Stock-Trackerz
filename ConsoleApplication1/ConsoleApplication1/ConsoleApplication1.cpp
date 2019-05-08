@@ -73,18 +73,25 @@ int main()
 		testList.AddToList(ticker);
 		cout << endl << endl << endl <<endl <<endl;
 		
-		//display basic info 
-		cout << "Ticker: ";
-		testStock.PrintName();
-		cout << endl << "The current price is: ";
-		testStock.PrintClosePrice();
-		std::cout << std::endl << "The high for the day is: ";
-		testStock.PrintHighPrice();
-		cout << endl << "The low for the day is: ";
-		testStock.PrintLowPrice();
-		cout << endl << "The current Volume is:	";
-		testStock.PrintVolume();
-		cout << endl << endl;
+		if(testStock.GetName() == "None")
+		{
+			cout << "Invalid Stock Ticker." << endl;
+		}
+		else
+		{
+			//display basic info 
+			cout << "Ticker: ";
+			testStock.PrintName();
+			cout << endl << "The current price is: ";
+			testStock.PrintClosePrice();
+			std::cout << std::endl << "The high for the day is: ";
+			testStock.PrintHighPrice();
+			cout << endl << "The low for the day is: ";
+			testStock.PrintLowPrice();
+			cout << endl << "The current Volume is:	";
+			testStock.PrintVolume();
+			cout << endl << endl;	
+		}
 
 		//add stock to portfolio
 		cout << "Would you like to add this stock to your portfolio ?? Y/N" << endl;
@@ -110,6 +117,25 @@ int main()
 			cout << "Your return percentage for this stock is: ";
 			testStock.PrintStockPercentage();
 			std::cout << std::endl;
+			
+			do
+			{
+				response = A;
+				cout << "Would you like to view your portfolio (P), search for another stock (S), or quit (Q)?" << endl;
+				cin >> response;
+				response = std::toupper(response);
+			
+				if(response == "P")
+				{
+				}
+				else if(response == "S")
+				{
+				}
+				else
+				{
+					cout << "Invalid response. Please enter P, S, or Q." << endl;
+				}
+				while(response != "P" || response != "S" || response != "Q');
 
 			//loops through and displays the ticker and price of each stock in the users portfolio
 			//also this will calculate the running gain/loss on the entire portfolio
