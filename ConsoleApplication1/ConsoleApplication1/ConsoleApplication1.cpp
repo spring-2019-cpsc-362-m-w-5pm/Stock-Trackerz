@@ -99,16 +99,17 @@ int main()
 		//add stock to portfolio
 		cout << "Would you like to add this stock to your portfolio ?? Y/N" << endl;
 		cin >> response;
-		if (response == 'Y' || 'y')
+		response = toupper(response);
+		if (response == 'Y')
 		{
 			int quantity;
 			float purchase_Price;
 
 			cout << "How many of these stock do you own?  ";
 			cin >> quantity;
-			cout << endl << "What was your purchase price?  ";
+			cout << endl << endl << "What was your purchase price?  ";
 			cin >> purchase_Price;
-			cout << endl;
+			cout << endl << endl;
 			testPort.AddToList(ticker, quantity, purchase_Price);
 
 			//shows the gain/loss for the current stock 
@@ -126,12 +127,19 @@ int main()
 				cout << "Would you like to view your portfolio (P), search for another stock (S), or quit (Q)?" << endl;
 				cin >> response;
 				response = std::toupper(response);
+				cout << endl;
 			
 				if(response == 'P')
 				{
+					if(testPort.GetSize() == 0)
+					{
+						cout << "Portfolio empty." << endl << endl;
+					}
+					else
+					{
 					//loops through and displays the ticker and price of each stock in the users portfolio
 					//also this will calculate the running gain/loss on the entire portfolio
-					cout << "Here is a list of the stocks in your Portfolio: " << endl;
+					cout << "Portfolio: " << endl;
 					for (int i = 0; i < testPort.GetSize(); i++)
 					{
 						testStock = testPort.OutputStock(i);
@@ -147,6 +155,7 @@ int main()
 						cout << ( testStock.GetClosePrice() * testStock.GetPurchaseQuantity() ) 
 							- ( testStock.GetPurchasePrice() * testStock.GetPurchaseQuantity() );
 						cout << endl << endl;			
+					}
 					}
 				}
 				else if(response == 'Q')
