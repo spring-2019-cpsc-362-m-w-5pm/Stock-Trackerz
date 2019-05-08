@@ -27,10 +27,12 @@ int main()
 	do
 	{
 		//reads in the ticker to be pulled from API
-		cout << "Please input the Symbol for the stock you would like see: ";
+		cout << "Please input the ticker for the stock you would like see or press Q to quit: ";
 		cin >> ticker;
 		ticker = std::toupper(ticker);
 		
+		if(ticker =! "Q")
+		{
 		CkHttp http;
 		CkGlobal glob;
 		bool success1 = glob.UnlockBundle("Anything for 30-day trial");
@@ -127,34 +129,39 @@ int main()
 			
 				if(response == "P")
 				{
+					//loops through and displays the ticker and price of each stock in the users portfolio
+					//also this will calculate the running gain/loss on the entire portfolio
+					cout << "Here is a list of the stocks in your Portfolio: " << endl;
+					for (int i = 0; i < testPort.GetSize(); i++)
+					{
+						testStock = testPort.OutputStock(i);
+						testStock.PrintName();
+						cout << " -- shares: ";
+						testStock.PrintPurchaseQuantity();
+						cout << " -- Purchase Price: ";
+						testStock.PrintPurchasePrice();
+						cout << " -- Current Price: ";
+						testStock.PrintClosePrice();
+						cout << " -- Net Gain/Loss: ";
+						cout << ( testStock.GetClosePrice() * testStock.GetPurchaseQuantity() ) 
+							- ( testStock.GetPurchasePrice() * testStock.GetPurchaseQuantity() );
+						cout << endl << endl;			
+					}
+				}
+				else if(response == "Q")
+				{
+					cout << "Thank you for using our program! << endl;
 				}
 				else if(response == "S")
 				{
+					// Loops back to beginning of program
 				}
-				else
 				{
 					cout << "Invalid response. Please enter P, S, or Q." << endl;
 				}
-				while(response != "P" || response != "S" || response != "Q');
-
-			//loops through and displays the ticker and price of each stock in the users portfolio
-			//also this will calculate the running gain/loss on the entire portfolio
-			cout << "Here is a list of the stocks in your Portfolio: " << endl;
-			for (int i = 0; i < testPort.GetSize(); i++)
-			{
-				testStock = testPort.OutputStock(i);
-				testStock.PrintName();
-				cout << " -- shares: ";
-				testStock.PrintPurchaseQuantity();
-				cout << " -- Current Price: ";
-				testStock.PrintClosePrice();
-				cout << endl;
-			}
-		}
-
-		cout << "Would you like to search a new stock? Y/N  ";
-		cin >> cont;
-	}while(cont == 'Y'|| cont == 'y');
+			} while(response != "P" || response != "S" || response != "Q');
+		} // if(ticker != "Q")
+	}while(response != "Q" && ticker!= "Q");
 
 	/*std::cout << "Test 1 - Stock Object" << std::endl;
 	testStock.UpdateStockInfo("MSFT");
