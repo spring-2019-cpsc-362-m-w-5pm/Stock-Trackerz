@@ -1,0 +1,24 @@
+﻿<Page x:Name="Main_Page"
+    x:Class="App1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="SearchBox" HorizontalAlignment="Left" Margin="13,40,0,0" Text="Search For Stock" VerticalAlignment="Top" Grid.Row="0" TextChanged="SearchBox_TextChanged" Width="246"/>
+        <Button x:Name="Search_Button" Content="Search" HorizontalAlignment="Left" Margin="264,40,0,0" VerticalAlignment="Top" Grid.Row="0" Click="Search_Button_Click"/>
+        <Button x:Name="All_Stock_Button" Content="View All Stock" HorizontalAlignment="Left" Margin="581,0,0,0" VerticalAlignment="Center" Grid.Row="2" Click="All_Stock_Button_Click"/>
+        <Button x:Name="Add_To_Portfolio_Button" Content="Add to Portfolio" HorizontalAlignment="Left" Margin="750,0,0,0" VerticalAlignment="Center" Grid.Row="2" Click="Add_To_Portfolio_Button_Click"/>
+        <Button x:Name="Back_Button" Content="Back" HorizontalAlignment="Left" Margin="331,40,0,0" VerticalAlignment="Top" Click="Back_Button_Click"/>
+        <ListView x:Name="StockList" HorizontalAlignment="Left" Height="620" Margin="49,38,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1392" SelectionChanged="StockList_SelectionChanged_1"/>
+    </Grid>
+</Page>
