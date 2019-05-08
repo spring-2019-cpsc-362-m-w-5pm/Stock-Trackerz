@@ -74,7 +74,7 @@ int main()
 		//creates and adds stock to list 
 		testStock.UpdateStockInfo(ticker);
 		testList.AddToList(ticker);
-		cout << endl << endl << endl <<endl <<endl;
+		cout << endl << endl;
 		
 		if(testStock.GetName() == "None")
 		{
@@ -136,13 +136,14 @@ int main()
 					{
 						testStock = testPort.OutputStock(i);
 						testStock.PrintName();
-						cout << " -- shares: ";
+						cout << " -------------------------" << endl;
+						cout << "Shares: ";
 						testStock.PrintPurchaseQuantity();
-						cout << " -- Purchase Price: ";
+						cout << endl << "Purchase Price: ";
 						testStock.PrintPurchasePrice();
-						cout << " -- Current Price: ";
+						cout << endl << "Current Price: ";
 						testStock.PrintClosePrice();
-						cout << " -- Net Gain/Loss: ";
+						cout << endl << "Net Gain/Loss: ";
 						cout << ( testStock.GetClosePrice() * testStock.GetPurchaseQuantity() ) 
 							- ( testStock.GetPurchasePrice() * testStock.GetPurchaseQuantity() );
 						cout << endl << endl;			
