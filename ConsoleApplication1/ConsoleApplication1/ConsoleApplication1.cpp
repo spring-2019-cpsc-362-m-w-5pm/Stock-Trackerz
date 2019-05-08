@@ -29,7 +29,8 @@ int main()
 		//reads in the ticker to be pulled from API
 		cout << "Please input the Symbol for the stock you would like see: ";
 		cin >> ticker;
-
+		ticker = std::toupper(ticker);
+		
 		CkHttp http;
 		CkGlobal glob;
 		bool success1 = glob.UnlockBundle("Anything for 30-day trial");
@@ -75,15 +76,15 @@ int main()
 		//display basic info 
 		cout << "Ticker: ";
 		testStock.PrintName();
+		cout << endl << "The current price is: ";
+		testStock.PrintClosePrice();
 		std::cout << std::endl << "The high for the day is: ";
 		testStock.PrintHighPrice();
 		cout << endl << "The low for the day is: ";
 		testStock.PrintLowPrice();
-		cout << endl << "The current price is: ";
-		testStock.PrintClosePrice();
 		cout << endl << "The current Volume is:	";
 		testStock.PrintVolume();
-		cout << endl;
+		cout << endl << endl;
 
 		//add stock to portfolio
 		cout << "Would you like to add this stock to your portfolio ?? Y/N" << endl;
@@ -102,7 +103,7 @@ int main()
 			testPort.AddToList(ticker, quantity, purchase_Price);
 
 			//shows the gain/loss for the current stock 
-			cout << "Your gain/loss for this stock is: ";
+			cout << "Your current gain/loss for this stock is: ";
 			testStock.PrintStockReturn();
 			cout << endl;
 
