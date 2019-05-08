@@ -20,6 +20,7 @@ int main()
 	StockList testList;
 	StockPortfolio testPort;
 	string ticker;
+	char response = A;
 	char cont;
 	cout << "Welcome to Stock Trackerz !!!" << endl << endl;
 
@@ -31,7 +32,7 @@ int main()
 		cin >> ticker;
 		ticker = std::toupper(ticker);
 		
-		if(ticker =! "Q")
+		if(ticker != "Q")
 		{
 		CkHttp http;
 		CkGlobal glob;
@@ -97,7 +98,6 @@ int main()
 
 		//add stock to portfolio
 		cout << "Would you like to add this stock to your portfolio ?? Y/N" << endl;
-		char response;
 		cin >> response;
 		if (response == 'Y' || 'y')
 		{
@@ -119,7 +119,7 @@ int main()
 			cout << "Your return percentage for this stock is: ";
 			testStock.PrintStockPercentage();
 			std::cout << std::endl;
-			
+		}
 			do
 			{
 				response = A;
@@ -127,7 +127,7 @@ int main()
 				cin >> response;
 				response = std::toupper(response);
 			
-				if(response == "P")
+				if(response == 'P')
 				{
 					//loops through and displays the ticker and price of each stock in the users portfolio
 					//also this will calculate the running gain/loss on the entire portfolio
@@ -148,20 +148,20 @@ int main()
 						cout << endl << endl;			
 					}
 				}
-				else if(response == "Q")
+				else if(response == 'Q')
 				{
-					cout << "Thank you for using our program! << endl;
+					cout << "Thank you for using our program!" << endl;
 				}
-				else if(response == "S")
+				else if(response == 'S')
 				{
 					// Loops back to beginning of program
 				}
 				{
 					cout << "Invalid response. Please enter P, S, or Q." << endl;
 				}
-			} while(response != "P" || response != "S" || response != "Q');
+			} while(response != 'P' || response != 'S' || response != 'Q');
 		} // if(ticker != "Q")
-	}while(response != "Q" && ticker!= "Q");
+	}while(response != 'Q' && ticker != "Q");
 
 	/*std::cout << "Test 1 - Stock Object" << std::endl;
 	testStock.UpdateStockInfo("MSFT");
