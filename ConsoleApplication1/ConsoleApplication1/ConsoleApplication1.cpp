@@ -156,10 +156,11 @@ int main()
 				{
 					// Loops back to beginning of program
 				}
+				else
 				{
 					cout << "Invalid response. Please enter P, S, or Q." << endl;
 				}
-			} while(response != 'P' || response != 'S' || response != 'Q');
+			} while(response != 'P' && response != 'S' && response != 'Q');
 		} // if(ticker != "Q")
 	}while(response != 'Q' && ticker != "Q");
 
